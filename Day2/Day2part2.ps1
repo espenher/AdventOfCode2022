@@ -44,5 +44,4 @@ foreach($line in $file){
 }
 
 $result = $points | Measure-Object -Sum
-echo $points
 echo $result.Sum
