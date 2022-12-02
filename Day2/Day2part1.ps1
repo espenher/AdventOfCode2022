@@ -4,29 +4,32 @@ $points = @()
 $sum = 0
 foreach($line in $file){
     $split = $line.Split(' ')
-    if($split[0] -eq 'A'){ #rock
-        switch($split[1]){
-            "Y" { $sum += 4; break } #draw
-            "X" { $sum += 3; break } #lose
-            "Z" { $sum += 8; break } #win
+    if($split[1] -eq 'Y'){ #paper | 
+        $sum += 2
+        switch($split[0]){
+            "A" { $sum += 6; break } #rock
+            "B" { $sum += 3; break } #paper
+            "C" { $sum += 0; break } #scissor
         }
         $points += $sum
         $sum = 0
     }
-    if($split[0] -eq 'B'){ #paper
-        switch($split[1]){
-            "Y" { $sum += 5; break } #draw
-            "X" { $sum += 1; break } #lose
-            "Z" { $sum += 9; break } #win
+    if($split[1] -eq 'X'){ #rock
+        $sum += 1
+        switch($split[0]){
+            "A" { $sum += 3; break } #rock
+            "B" { $sum += 0; break } #paper
+            "C" { $sum += 6; break } #scissor
         }
         $points += $sum
         $sum = 0
     }
-    if($split[0] -eq 'C'){ #scissor
-        switch($split[1]){
-            "Y" { $sum += 6; break } #draw
-            "X" { $sum += 2; break } #lose
-            "Z" { $sum += 7; break } #win
+    if($split[1] -eq 'Z'){ #scissor
+        $sum += 3
+        switch($split[0]){
+            "A" { $sum += 0; break } #rock
+            "B" { $sum += 6; break } #paper
+            "C" { $sum += 3; break } #scissor
         }
         $points += $sum
         $sum = 0
@@ -34,4 +37,5 @@ foreach($line in $file){
 }
 
 $result = $points | Measure-Object -Sum
+
 echo $result.Sum
