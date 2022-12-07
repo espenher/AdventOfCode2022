@@ -16,8 +16,6 @@ foreach($k in $upperASCIIFirst.Keys){
 }
 
 $chararray = @()
-
-
 [bool]$next = $true
 foreach($line in $file){
     $half = $line.length / 2
@@ -41,29 +39,20 @@ foreach($line in $file){
     }
 }
 
-
-
-
-
-
 $upperLtrNumbers = @()
 $lowerLtrNumbers = @()
 foreach($char in $chararray){
     if($char -cmatch "[A-Z]"){
-        $strNumber = $char | % {$upperLtrFirst["$_"]}
+        $strNumber = $char | ForEach-Object {$upperLtrFirst["$_"]}
         $intNumber = [int]$strNumber -38
         $upperLtrNumbers += $intNumber
     }
     if($char -cmatch "[a-z]"){
-        $strNumber = $char | % {$lowerLtrFirst["$_"]}
+        $strNumber = $char | ForEach-Object {$lowerLtrFirst["$_"]}
         $intNumber = [int]$strNumber -96
         $lowerLtrNumbers += $intNumber
     }
 }
-
-
-# echo $upperLtrNumbers
-# echo $lowerLtrNumbers
 
 $sumUpper = $upperLtrNumbers | Measure-Object -Sum
 $sumLower = $lowerLtrNumbers | Measure-Object -Sum
